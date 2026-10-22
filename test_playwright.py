@@ -162,6 +162,28 @@ async def run():
         await page.click("#tab-dashboard")
         await asyncio.sleep(0.5)
 
+        # 9. Verify Powered by TheWebVale & Tri-Axis Viewports
+        print("📐 Testing Footer Branding & Tri-Axis Viewports...")
+        body_text = await page.inner_text("body")
+        assert "Powered by TheWebVale" in body_text, "Missing Powered by TheWebVale in footer"
+        assert "Built by Yash Jain" not in body_text, "Leaked personal name in UI"
+
+        # Check Tablet 768px
+        await page.set_viewport_size({"width": 768, "height": 1024})
+        await asyncio.sleep(0.5)
+        sw_tab = await page.evaluate("() => document.documentElement.scrollWidth")
+        cw_tab = await page.evaluate("() => document.documentElement.clientWidth")
+        assert sw_tab <= cw_tab, f"Tablet horizontal overflow: {sw_tab} > {cw_tab}"
+        print(f"   Tablet 768px clean (scrollWidth: {sw_tab}px, clientWidth: {cw_tab}px)")
+
+        # Check Mobile 360px
+        await page.set_viewport_size({"width": 360, "height": 800})
+        await asyncio.sleep(0.5)
+        sw_mob = await page.evaluate("() => document.documentElement.scrollWidth")
+        cw_mob = await page.evaluate("() => document.documentElement.clientWidth")
+        assert sw_mob <= cw_mob, f"Mobile horizontal overflow: {sw_mob} > {cw_mob}"
+        print(f"   Mobile 360px clean (scrollWidth: {sw_mob}px, clientWidth: {cw_mob}px)")
+
         # Final assertion on console errors
         print("\n🔍 Checking for Console Errors...")
         print(f"   Total Console Errors: {len(console_errors)}")

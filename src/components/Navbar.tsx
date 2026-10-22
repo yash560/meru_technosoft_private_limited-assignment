@@ -34,12 +34,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   failedTests
 }) => {
   const tabs = [
-    { id: 'dashboard', label: 'Executive QA', icon: Activity },
-    { id: 'runner', label: 'Live Test Runner', icon: Play },
-    { id: 'matrix', label: 'Test Matrix', icon: Layers },
-    { id: 'chaos', label: 'Chaos Engine', icon: Flame },
-    { id: 'performance', label: 'Load & Concurrency', icon: Cpu },
-    { id: 'defects', label: 'Defect Tracker', icon: Bug },
+    { id: 'dashboard', label: 'Executive QA', shortLabel: 'Overview', icon: Activity },
+    { id: 'runner', label: 'Live Test Runner', shortLabel: 'Runner', icon: Play },
+    { id: 'matrix', label: 'Test Matrix', shortLabel: 'Matrix', icon: Layers },
+    { id: 'chaos', label: 'Chaos Engine', shortLabel: 'Chaos', icon: Flame },
+    { id: 'performance', label: 'Load & Concurrency', shortLabel: 'Load', icon: Cpu },
+    { id: 'defects', label: 'Defect Tracker', shortLabel: 'Defects', icon: Bug },
   ];
 
   return (
@@ -61,14 +61,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                   HelloBooks.ai
                 </span>
               </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+              <p className="hidden xl:block text-xs text-slate-500 dark:text-slate-400 font-medium">
                 Meru Technosoft • Automated Financial QA & Verification Engine
               </p>
             </div>
           </div>
 
           {/* Navigation Tabs */}
-          <nav className="hidden md:flex items-center space-x-1">
+          <nav className="hidden lg:flex items-center space-x-1">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -77,14 +77,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                   key={tab.id}
                   id={`tab-${tab.id}`}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 ${
+                  className={`flex items-center space-x-1.5 px-2.5 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 ${
                     isActive
                       ? 'bg-sky-50 text-sky-700 border border-sky-200 dark:bg-sky-950/60 dark:text-sky-300 dark:border-sky-800/80 shadow-xs'
                       : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
                   }`}
                 >
                   <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-sky-600 dark:text-sky-400' : 'text-slate-400'}`} />
-                  <span>{tab.label}</span>
+                  <span className="hidden lg:inline">{tab.label}</span>
+                  <span className="inline lg:hidden">{tab.shortLabel}</span>
                   {tab.id === 'defects' && failedTests > 0 && (
                     <span className="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-rose-500 text-white font-bold">
                       {failedTests}
@@ -133,8 +134,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         </div>
 
-        {/* Mobile Navigation Bar */}
-        <div className="flex md:hidden overflow-x-auto py-2 space-x-1 border-t border-slate-200 dark:border-slate-800">
+        {/* Mobile & Tablet Navigation Bar */}
+        <div className="flex lg:hidden overflow-x-auto py-2 space-x-1 border-t border-slate-200 dark:border-slate-800">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;

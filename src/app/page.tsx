@@ -310,7 +310,9 @@ export default function Home() {
             <span>Meru Technosoft Private Limited</span>
           </div>
           <div className="flex items-center space-x-4">
-            <span>Built by Yash Jain</span>
+            <span className="inline-flex items-center gap-1 font-bold text-sky-600 dark:text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-md border border-sky-500/20 text-xs">
+              Powered by TheWebVale
+            </span>
             <span>•</span>
             <span className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
               34 Tests Calibrated (100% Invariant)
